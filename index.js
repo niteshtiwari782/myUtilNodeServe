@@ -5,7 +5,7 @@ const dotenv = require("dotenv");
 dotenv.config();
 const app = express();
 const PORT = 5000;
-
+const HOST = process.env.HOST;
 app.use(cors());
 app.use(express.json());
 
@@ -28,6 +28,4 @@ app.use((req, res) =>
   res.status(404).json({error: "Not Found", path: req.originalUrl})
 );
 
-app.listen(PORT, "127.0.0.1", () =>
-  console.log(`Up at http://127.0.0.1:${PORT}`)
-);
+app.listen(PORT, HOST, () => console.log(`Up at ${HOST}:${PORT}`));
