@@ -1,9 +1,10 @@
-const express = require('express');
-const router = express.Router();
+const {Router} = require("express");
 
-router.get('/', (req, res) => {
-  console.log(req);
-  res.json({ message: 'Welcome to WeddingBells API' });
+const router = Router();
+
+// Health for API namespace
+router.get("/ping", (req, res) => {
+  res.json({ok: true, time: new Date().toISOString()});
 });
 
 module.exports = router;

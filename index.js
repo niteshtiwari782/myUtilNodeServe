@@ -1,19 +1,33 @@
-const express = require('express');
-const dotenv = require('dotenv');
-const connectDB = require('./config/db');
-
+const express = require("express");
+const cors = require("cors");
+const connectDB = require("./config/db");
+const dotenv = require("dotenv");
 dotenv.config();
-
 const app = express();
+const PORT = 5000;
 
-// Middleware
+app.use(cors());
 app.use(express.json());
 
-// Connect DB
-connectDB();
+// Public routes (no auth)
 
-// Routes
-app.use('/api', require('./routes/index'));
+const apiRouter = require("./routes/index");
+(async () => {
+  try {
+    await connectDB();
+  } catch (e) {
+    console.error("DB connect error:", e.message);
+  }
+})();
 
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+app.use("/", apiRouter);
+app.use("/api", require("./routes/item"));
+
+// 404 visibility
+app.use((req, res) =>
+  res.status(404).json({error: "Not Found", path: req.originalUrl})
+);
+
+app.listen(PORT, "127.0.0.1", () =>
+  console.log(`Up at http://127.0.0.1:${PORT}`)
+);
