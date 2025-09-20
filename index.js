@@ -21,7 +21,7 @@ const apiRouter = require("./routes/index");
 })();
 
 app.use("/", apiRouter);
-app.use("/api", require("./routes/item"));
+app.use("/venues", require("./routes/venueListing"));
 
 // 404 visibility
 app.use((req, res) =>
