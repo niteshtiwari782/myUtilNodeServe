@@ -4,6 +4,7 @@ const FoodMenu = require("../models/foodMenu");
 const Reviews = require("../models/reviews");
 const Facilities = require("../models/facilities");
 const Rooms = require("../models/rooms");
+const Venues = require("../models/venues");
 const router = Router();
 
 router.post("/createPackage", async (req, res) => {
@@ -97,6 +98,18 @@ router.get("/getFacilities", async (req, res) => {
   try {
     const {venue_id} = req.query;
     const doc = await Facilities.find({venue_id: venue_id}).lean();
+    if (!doc) return res.status(404).json({error: "Not found"});
+    res.json(doc);
+  } catch (err) {
+    console.log(e);
+    throw Error((messsage = e.msg));
+  }
+});
+
+router.get("/getVenueMetaData", async (req, res) => {
+  try {
+    const {venue_id} = req.query;
+    const doc = await Venues.find({_id: venue_id}).lean();
     if (!doc) return res.status(404).json({error: "Not found"});
     res.json(doc);
   } catch (err) {
