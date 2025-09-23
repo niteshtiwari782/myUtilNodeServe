@@ -14,6 +14,7 @@ const VenueSchema = new mongoose.Schema(
     startPrice: {type: Number, default: 10000},
     capacity: {type: Number, default: 10000},
     speciality: [{type: String}],
+    propertyType: {type: String, required: true},
   },
   {timestamps: true}
 );
